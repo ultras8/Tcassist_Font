@@ -24,14 +24,17 @@ function Admission() {
         <AdmissionCard
           title={"Interested Department \n ( from interested universities )"}
           description={"คำนวณคะแนนคณะที่สนใจ"}
+          onClick={() => navigate('/calculate/faculty')}
         />
         <AdmissionCard
           title={"Interested Universities \n ( from various department) "}
           description={"คำนวณคะแนนทุกคณะในมหาวิทยาลัยที่สนใจ"}
+          onClick={() => navigate('/calculate/university')}
         />
         <AdmissionCard
           title={"Interested Department \n ( from various universities) "}
           description={"คำนวณคะแนนคณะที่สนใจจากหลายมหาวิทยาลัย"}
+          onClick={() => navigate('/calculate/compare')}
         />
         <AdmissionCard
           title={"TOP 10"}
@@ -41,7 +44,7 @@ function Admission() {
 
           <h3
             onClick={() => navigate('/score-input')}
-            className="text-[32px] font-bold text-white leading-tight whitespace-pre-line">
+            className="text-[30px] font-bold text-white leading-tight whitespace-pre-line">
             กรอกคะแนน
           </h3>
 
