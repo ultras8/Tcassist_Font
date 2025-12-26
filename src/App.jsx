@@ -1,13 +1,20 @@
-// import Home from './pages/Home'
-import Admission from './pages/admission'
+// src/App.jsx
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Admission from './pages/admission';
+import InsertScore from './pages/insertScore'; // 1. เช็คชื่อไฟล์ให้ถูก (n ตัวเดียว)
+import { UserProvider } from './context/UserContext';
 
 function App() {
   return (
-    <div className="bg-[#ADD6F2] min-h-screen">
-      <Admission />
-      {/* <Home /> */}
-    </div>
-  )
+    <UserProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Admission />} />
+          <Route path="/score-input" element={<InsertScore />} />
+        </Routes>
+      </BrowserRouter>
+    </UserProvider>
+  );
 }
 
 export default App

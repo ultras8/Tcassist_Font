@@ -1,6 +1,6 @@
 @import "tailwindcss";
 body {
   background-color: #add6f2;
-  margin: 0;
+  font-family: "Kanit", sans-serif;
   min-height: 100vh;
 }
