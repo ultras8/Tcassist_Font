@@ -95,7 +95,6 @@ function InsertScore() {
   )
 }
 
-// Component ย่อย (ใช้ shadow-md สำหรับเงานุ่มปกติ)
 const ScoreInputItem = ({ title }) => (
   <div className="flex flex-col items-center">
     <label className="text-[10px] text-slate-500 mb-1 text-center h-[25px] flex items-end">

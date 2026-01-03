@@ -1,38 +1,53 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { BackIcon, HomeIcon } from './icons'
+import { BackIcon, HomeIcon, LogoutIcon } from './icons'
 import UserProfile from './userProfile'
 import { useUser } from '../context/UserContext'
 
 const Banner = ({ showBack = true }) => {
-  const { user } = useUser();
+  const { user, setUser } = useUser(); // ดึง setUser มาด้วยเพื่อใช้ตอน Logout
   const navigate = useNavigate();
 
+  // สร้าง state สำหรับเก็บรูปโปรไฟล์ที่ดึงมาจากเครื่อง
+  const [localAvatar, setLocalAvatar] = useState('/default-avatar.png');
+
+  useEffect(() => {
+    // ไปหยิบรูปที่สุ่มไว้ตอน Login มาจาก localStorage
+    const savedAvatar = localStorage.getItem('userAvatar');
+    if (savedAvatar) {
+      setLocalAvatar(savedAvatar);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    if (window.confirm("จะออกจากระบบจริงๆ หรอคะ?")) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('userAvatar'); // ล้างรูปทิ้ง
+      setUser(null); // ล้างค่า user ใน context
+      navigate('/login');
+    }
+  };
+
   return (
-    <nav className="flex items-center justify-between p-4">
-      {/* ส่วน Profile */}
+    <nav className="flex items-center justify-between p-4 no-print"> {/* เพิ่ม no-print เผื่อไว้ตอนพิมพ์ PDF */}
       <UserProfile
-        name={user.name}
-        profileUrl={user.profileUrl}
+        name={user?.name || 'Guest'}
+        profileUrl={localAvatar} // ใช้รูปที่ดึงมาจาก localStorage
       />
 
-      {/* ส่วนไอคอนควบคุม */}
-      <div className="flex items-center gap-2">
-        {/* ถ้าอยู่หน้าแรกอาจจะไม่โชว์ปุ่ม Back แต่หน้าอื่นโชว์ */}
+      <div className="flex items-center gap-1">
         {showBack && (
-          <button
-            onClick={() => navigate(-1)}
-            className="p-2 hover:bg-white/20 rounded-full transition-colors text-slate-700"
-          >
+          <button onClick={() => navigate(-1)} className="p-2 text-slate-700">
             <BackIcon />
           </button>
         )}
 
-        <button
-          onClick={() => navigate('/')}
-          className="p-2 text-slate-700 rounded-xl transition-all active:scale-90"
-        >
+        <button onClick={() => navigate('/')} className="p-2 text-slate-700">
           <HomeIcon />
+        </button>
+
+        <button onClick={handleLogout} className="p-2 text-slate-700 hover:text-red-500">
+          <LogoutIcon />
         </button>
       </div>
     </nav>

@@ -4,3 +4,34 @@ body {
   font-family: "Kanit", sans-serif;
   min-height: 100vh;
 }
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-4px);
+  }
+  75% {
+    transform: translateX(4px);
+  }
+}
+.animate-shake {
+  animation: shake 0.2s ease-in-out 0s 2;
+}
+/* บังคับล้างสี oklch ทุกจุดใน report เมื่อจะส่งออก */
+/* บังคับสไตล์เฉพาะตอนจะทำ PDF */
+#ranking-report * {
+  font-family: "Kanit", "Sarabun", sans-serif !important; /* หรือฟอนต์ที่หนูใช้ */
+  line-height: 1.2 !important; /* บีบระยะบรรทัดไม่ให้ตัวอักษรลอยหรือเลื่อน */
+  letter-spacing: 0px !important;
+}
+
+/* แก้ปัญหา AI Analysis เลื่อน */
+#ranking-report .bg-green-100,
+#ranking-report .bg-yellow-100,
+#ranking-report .bg-red-100 {
+  min-height: 80px; /* บังคับความสูงขั้นต่ำไว้ไม่ให้ข้อความดันกัน */
+  display: block !important;
+  overflow: hidden;
+}
