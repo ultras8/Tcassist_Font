@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;700;900&display=swap");
 @import "tailwindcss";
 body {
   background-color: #add6f2;
@@ -22,7 +23,8 @@ body {
 /* บังคับล้างสี oklch ทุกจุดใน report เมื่อจะส่งออก */
 /* บังคับสไตล์เฉพาะตอนจะทำ PDF */
 #ranking-report * {
-  font-family: "Kanit", "Sarabun", sans-serif !important; /* หรือฟอนต์ที่หนูใช้ */
+  font-family:
+    "Kanit", "Sarabun", sans-serif !important; /* หรือฟอนต์ที่หนูใช้ */
   line-height: 1.2 !important; /* บีบระยะบรรทัดไม่ให้ตัวอักษรลอยหรือเลื่อน */
   letter-spacing: 0px !important;
 }

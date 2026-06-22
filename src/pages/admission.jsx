@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import Banner from '../components/Banner';
-import AdmissionCard from '../components/admissionCard';
+import AdmissionCard from '../components/AdmissionCard';
 
 function Admission() {
   const navigate = useNavigate();

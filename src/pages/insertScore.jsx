@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Banner from '../components/Banner'
-import Loader from '../components/loader'
+import Loader from '../components/Loader'
 import axios from 'axios';
 
 function InsertScore() {

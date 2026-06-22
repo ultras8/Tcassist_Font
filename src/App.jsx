@@ -12,10 +12,42 @@ import ResultView from "./pages/resultView";
 import Home from "./pages/home";
 import Register from "./pages/register";
 import Login from "./pages/login";
-import { useEffect } from "react";
 import RankingSelection from "./pages/RankingSelection";
 import RankingResult from "./pages/RankingResult";
+import ProtectedAdminRoute from "./components/protectedAdminRoute";
+import AdminLayout from "./pages/admin/AdminLayout";
+import { useEffect } from "react";
 import { UserProvider } from "./context/UserContext";
+import ExamLibrary from "./pages/ExamLibrary";
+import MockExam from "./pages/MockExam";
+import MyReports from "./components/MyReports";
+import ReportChat from "./components/ReportChat";
+import CreateReport from "./components/CreateReport";
+import axios from "axios";
+
+axios.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+axios.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && (error.response.status === 401 || error.response.status === 498)) {
+      localStorage.removeItem("token");
+      window.location.href = "/login";
+    }
+    return Promise.reject(error);
+  }
+);
 
 function App() {
   const navigate = useNavigate();
@@ -36,6 +68,7 @@ function App() {
     <UserProvider>
       <div className="App">
         <Routes>
+          {/* user zone */}
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
@@ -56,6 +89,20 @@ function App() {
           <Route path="/calculate/result" element={<ResultView />} />
           <Route path="/calculate/ranking" element={<RankingSelection />} />
           <Route path="/calculate/ranking-result" element={<RankingResult />} />
+          <Route path="/exam-library" element={<ExamLibrary />} />
+          <Route path="/mock-exam" element={<MockExam />} />
+          <Route path="/my-reports" element={<MyReports />} />
+          <Route path="/report-chat/:id" element={<ReportChat />} />
+          <Route path="/create-report" element={<CreateReport />} />
+          {/* admin zone */}
+          <Route
+            path="/admin/*"
+            element={
+              <ProtectedAdminRoute>
+                <AdminLayout />
+              </ProtectedAdminRoute>
+            }
+          />
         </Routes>
       </div>
     </UserProvider>

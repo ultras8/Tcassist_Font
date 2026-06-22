@@ -12,7 +12,7 @@ function ResultView() {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1); // หน้าปัจจุบัน
   const [totalItems, setTotalItems] = useState(0); // จำนวนคณะทั้งหมด
-  const limit = 5; // โหลดทีละ 5 
+  const limit = 5; // โหลดทีละ 5
 
   const { type, universityId, programCode, majorName, year } = location.state || {};
 
@@ -71,14 +71,12 @@ function ResultView() {
     </div>
   );
 
-  // ฟังก์ชันนี้จะใช้เฉพาะหน้า Interested Major
   // คลีนชื่อสาขาเพราะ สาขาต่างมหาลัยชื่อคล้ายกันแต่ไม่เหมือนกัน
   const getGroupedMajorOptions = (allData) => {
     const seen = new Set();
     const options = [];
 
     allData.forEach(item => {
-      // ใช้ logic "ตบชื่อ" ให้คลีนเหมือนที่เราคุยกัน
       let cleanName = item.programName
         .replace(/\s*\(.*?\)\s*/g, '') // ตัดวงเล็บ
         .replace(/สาขาวิชา|หลักสูตร|วิชาเอก/g, '') // ตัดคำสร้อย
@@ -115,7 +113,7 @@ function ResultView() {
                 fullScore={100}
                 year={item.year}
                 criteria={item.isPassedCriteria ? "ผ่านเกณฑ์ขั้นต่ำ" : "ไม่ผ่านเกณฑ์"}
-                risk={item.risk} // ส่งก้อน { status: 'Safe', message: '...' } ไปด้วย
+                risk={type === "single" ? null : item.risk}
                 recommendation={item.recommendation}
               />
             ))

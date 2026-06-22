@@ -34,13 +34,12 @@ const ScoreCard = ({ university, faculty, score, fullScore, year, risk, isMini =
       message: 'เก่งมากเลยค่ะ! รักษามาตรฐานนี้ไว้ ติดชัวร์ๆ ยินดีด้วยนะ 🎉'
     };
   } else if (scoreRatio >= passThreshold - 3) {
-    // 🟡 Risk Zone (คะแนนก้ำกึ่ง +/- นิดเดียว)
     status = {
       color: 'text-yellow-600',
       bg: 'bg-yellow-50',
       border: 'border-yellow-400',
       label: '⚖️ คะแนนต้องลุ้น!',
-      message: 'ก้ำกึ่งมากเลย! ยังมีโอกาสนะ ทำคะแนนส่วนอื่นเพิ่มอีกนิด ลุ้นหนักแต่เป็นไปได้! 🔥'
+      message: 'ก้ำกึ่งมากเลย! แต่ยังมีโอกาส ทำคะแนนส่วนอื่นเพิ่มอีกนิด สู้ๆนะคะ 🔥'
     };
   }
 
@@ -50,7 +49,7 @@ const ScoreCard = ({ university, faculty, score, fullScore, year, risk, isMini =
         <div className="flex justify-between items-center gap-2">
           <div className="flex gap-2">
             <span className="bg-[#ADD6F2] text-slate-800 px-3 py-1 rounded-full text-[12px] font-black border border-black">TCAS {year}</span>
-            {risk && (
+            {risk && risk.status?.toLowerCase() !== 'unknown' && (
               <span className={`px-3 py-1 rounded-full text-[12px] font-black border ${getRiskColor(risk.status)}`}>
                 AI: {risk.status}
               </span>
@@ -70,13 +69,21 @@ const ScoreCard = ({ university, faculty, score, fullScore, year, risk, isMini =
           <p className="text-[12px] font-black text-slate-400 uppercase tracking-widest">คะแนนที่คำนวณได้</p>
           <div className="my-1">
             <span className={`text-[42px] font-black ${status.color} leading-none`}>
+              {(score || 0).toLocaleString()}
+            </span>
+            <span className="text-[18px] font-bold text-slate-400 ml-1">
+              / {(fullScore || 0).toLocaleString()}
+            </span>
+            {/* <span className={`text-[42px] font-black ${status.color} leading-none`}>
               {score.toLocaleString()}
             </span>
-            <span className="text-[18px] font-bold text-slate-400 ml-1">/ {fullScore.toLocaleString()}</span>
+            <span className="text-[18px] font-bold text-slate-400 ml-1">/ {fullScore.toLocaleString()}</span> */}
           </div>
 
           <p className={`text-[16px] font-black ${status.color}`}>
-            {risk ? `โอกาสติด: ${risk.message}` : status.label}
+            {risk && risk.status?.toLowerCase() !== 'unknown'
+              ? `โอกาสติด: ${risk.message}`
+              : status.label}
           </p>
         </div>
       </div>

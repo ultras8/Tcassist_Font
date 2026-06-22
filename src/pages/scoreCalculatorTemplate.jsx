@@ -91,7 +91,6 @@ function ScoreCalculator({ type }) {
     fetchPrograms();
   }, [selectedUni, selectedYear, type]);
 
-  // โหลดชื่อสาขารวม (MultiUni Mode) - แก้ไขตรงนี้ให้รองรับข้อมูลแบบ String Array
   useEffect(() => {
     if (type !== 'multiUni') return;
     const fetchAllMajors = async () => {
@@ -151,8 +150,6 @@ function ScoreCalculator({ type }) {
 
     navigate('/calculate/result', {
       state: {
-        // แก้ตรงนี้: ถ้าเป็น multiUni ให้ส่ง type เป็น 'major' 
-        // เพื่อให้ตรงกับเงื่อนไขใน resultView และ path ของ Backend
         type: isMulti ? 'major' : type,
         universityId: selectedUni,
         programCode: isMulti ? '' : selectedProgramCode,
